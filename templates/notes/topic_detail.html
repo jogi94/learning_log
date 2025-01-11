@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h3 class="card-title text-success">{{ object.name }}</h3>
+                <div>
+                    <a href="{% url 'notes:topic_list' %}" class="btn btn-primary">Back</a>
+                    <a href="{{ object.get_update_url }}" class="btn btn-secondary">Edit</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <!-- Datagrid Item -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Name</div>
+                            <div class="datagrid-content">{{ object.name }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Created</div>
+                            <div class="datagrid-content">{{ object.created }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Modified</div>
+                            <div class="datagrid-content">{{ object.modified }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">id</div>
+                            <div class="datagrid-content">{{ object.id }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if object.entry_set.exists %}
+        <div class="card mt-5">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h3 class="card-title"><strong class="text-danger">Entries</strong></h3>
+                <div class="card-actions">
+                    <a href="{% url 'notes:entry_create' %}" class="btn btn-primary">Add Entry</a>
+                </div>
+            </div>
+            <div class="card col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Text</th>
+                            <th>Added On</th>
+                            <th>Update</th>
+                            <th class="w-1">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entry in object.entry_set.all %}
+                        <tr>
+                            <td>{{ entry.id }}</td>
+                            <td class="text-secondary">
+                                {{ entry.text }}
+                            <td class="text-secondary">
+                                {{ entry.date_added }}
+                            </td>
+                            <td class="text-secondary"><a href="{{ entry.get_update_url }}" class="text-reset">
+                                Update</a></td>
+                            <td>
+                                <form action="{{ entry.get_delete_url}}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card mt-5">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h3 class="card-title"><strong class="text-danger">No Entries</strong></h3>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

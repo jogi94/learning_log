@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load cache %}
+{% cache CACHE_MONTHLY page_404 %}
+{% block content %}
+<main class="error-page container">
+  <div class="card col-sm-12 col-md-7">
+      <div class="card-body px-3 py-5">
+          <div class="row">
+            <div class="col-md-12 col-lg-7">
+                <div class="error-page-title">404</div>
+                <div class="error-page-subtitle">Not Found</div>
+            </div>
+            <div class="error-page-content col-md-12 col-lg-5">
+                <p>Sorry. Seems like the page is missing.</p>
+                <p class="mt-lg-4">Go <a href="javascript:void(0)" onclick="javascript: history.go(-1)">back</a> from where you came from or <a href="#">contact us</a></p>
+            </div>
+          </div>
+      </div>
+  </div>
+</main>
+{% endblock %}
+{% endcache %}

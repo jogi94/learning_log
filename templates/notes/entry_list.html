@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <h3 class="card-title text-success">Entry List</h3>
+        <div class="card-actions">
+            <a href="{% url 'notes:entry_create' %}" class="btn btn-primary">
+                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 5l0 14"></path>
+                    <path d="M5 12l14 0"></path>
+                </svg>
+                Add entry
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="card col-lg-12">
+    <div class="table-responsive">
+        <table class="table table-vcenter card-table">
+            <thead>
+            <tr>
+                <th>Topic</th>
+                <th>text</th>
+                <th>Date_modified</th>
+                <th>Detail</th>
+                <th>Update</th>
+                <th class="w-1">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in object_list %}
+            <tr>
+                <td>{{ entry.topic }}</td>
+                <td class="text-secondary">
+                    {{ entry.text }}
+                <td class="text-secondary">
+                    {{ entry.date_added }}
+                </td>
+                <td class="text-secondary"><a href="{{ entry.get_absolute_url }}" class="text-reset">
+                    Detail</a></td>
+                <td class="text-secondary">
+                    <a href="{{ entry.get_update_url }}">Update</a>
+                </td>
+                <td>
+                    <form action="{{ entry.get_delete_url }}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

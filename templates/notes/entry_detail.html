@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h3 class="card-title text-success">Entry List</h3>
+                <div>
+                    <a href="{% url 'notes:entry_list' %}" class="btn btn-primary">Back</a>
+                    <a href="{{ object.get_update_url }}" class="btn btn-secondary">Edit</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <!-- Datagrid Item -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Id</div>
+                            <div class="datagrid-content">{{ object.id }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Text</div>
+                            <div class="datagrid-content">{{ object.text }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Topic</div>
+                            <div class="datagrid-content">{{ object.topic }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Date Added</div>
+                            <div class="datagrid-content">{{ object.date_added }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
